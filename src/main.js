@@ -7,6 +7,7 @@ if (require("electron-squirrel-startup")) {
     app.quit();
 }
 
+const { openDialog, showMessageBox } = require("./app/core/common");
 let mainWin;
 // Menu.setApplicationMenu(null);
 const createWindow = () => {
@@ -46,6 +47,19 @@ const createWindow = () => {
 app.on("ready", createWindow);
 
 // main function
+
+// read 
+
+// open dialog
+ipcMain.handle("open-dialog", async (event, data) => {
+    return await openDialog(data, mainWin);
+});
+
+// open message box
+ipcMain.handle("show-message", async (event, data) => {
+    return await showMessageBox(data, mainWin);
+});
+
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
