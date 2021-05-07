@@ -1,0 +1,106 @@
+{
+    "name": "donload_ming_bot",
+    "productName": "Download Ming Bot",
+    "version": "0.2.1",
+    "description": "Desktop application with electron for downloading songs from downloadMing",
+    "main": ".webpack/main",
+    "scripts": {
+        "start": "NODE_ENV=development electron-forge start",
+        "start_prod": "NODE_ENV=production electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make",
+        "publish": "electron-forge publish",
+        "lint": "echo \"No linting configured\""
+    },
+    "keywords": [
+        "songs",
+        "Ming",
+        "bollywood",
+        "bot",
+        "crwaler",
+        "downloader",
+        "download",
+        "manager"
+    ],
+    "author": {
+        "name": "Meeshal Kumar",
+        "email": "meeshal1994@gmail.com"
+    },
+    "license": "MIT",
+    "config": {
+        "forge": {
+            "packagerConfig": {
+                "icon": "./src/icons/icon"
+            },
+            "makers": [
+                {
+                    "name": "@electron-forge/maker-squirrel",
+                    "config": {
+                        "name": "occupancy_analyst"
+                    }
+                },
+                {
+                    "name": "@electron-forge/maker-dmg",
+                    "config": {
+                        "format": "ULFO"
+                    }
+                },
+                {
+                    "name": "@electron-forge/maker-deb",
+                    "config": {}
+                },
+                {
+                    "name": "@electron-forge/maker-rpm",
+                    "config": {}
+                }
+            ],
+            "plugins": [
+                [
+                    "@electron-forge/plugin-webpack",
+                    {
+                        "mainConfig": "./webpack.main.config.js",
+                        "renderer": {
+                            "config": "./webpack.renderer.config.js",
+                            "entryPoints": [
+                                {
+                                    "html": "./src/app/windows/index.html",
+                                    "js": "./src/app/renderer.js",
+                                    "name": "main_window"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            ]
+        }
+    },
+    "devDependencies": {
+        "@electron-forge/cli": "^6.0.0-beta.54",
+        "@electron-forge/maker-deb": "^6.0.0-beta.54",
+        "@electron-forge/maker-dmg": "^6.0.0-beta.54",
+        "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+        "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+        "@electron-forge/maker-wix": "^6.0.0-beta.54",
+        "@electron-forge/maker-zip": "^6.0.0-beta.54",
+        "@electron-forge/plugin-webpack": "^6.0.0-beta.54",
+        "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+        "@tailwindcss/forms": "^0.2.1",
+        "autoprefixer": "^10.2.5",
+        "copy-webpack-plugin": "^6.3.2",
+        "css-loader": "^4.3.0",
+        "electron": "11.3.0",
+        "electron-wix-msi": "^3.2.0",
+        "file-loader": "^6.2.0",
+        "node-loader": "^1.0.2",
+        "postcss": "^8.2.8",
+        "postcss-loader": "^4.2.0",
+        "style-loader": "^1.3.0",
+        "tailwind-scrollbar": "^1.2.4",
+        "tailwindcss": "^2.0.3"
+    },
+    "dependencies": {
+        "electron-squirrel-startup": "^1.0.0",
+        "electron-store": "6.0.1",
+        "lodash": "^4.17.21"
+    }
+}
