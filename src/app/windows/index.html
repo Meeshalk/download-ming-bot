@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Download Ming - Bot</title>
+    </head>
+    <body class="oa-body">
+        <div
+            id="cover-spin"
+            class="hidden flex flex-col items-center justify-center"
+        >
+            <svg
+                class="animate-spin bg-transparent border-4 border-opacity-50 border-transparent h-8 mb-1 rounded-full w-8"
+                style="border-right-color: white; border-top-color: white"
+                viewBox="0 0 24 24"
+            ></svg>
+            <!-- <button
+                id="cancel_process"
+                class="mt-4 oa-btn-red oa-main-btn"
+                title="Let's you select a folder for data and files"
+            >
+                Cancel
+            </button> -->
+        </div>
+        <!-- head section -->
+        <section class="top-panel mb-2">
+            <!-- head container -->
+            <div class="p-2 d-border">
+                <!-- start form -->
+                <form id="mainform" class="oa-form">
+                    <!-- city state input -->
+                    <label for="url" class="mr-2 flex-grow">
+                        <input
+                            type="text"
+                            class="input-text oa-disabled"
+                            name="url"
+                            id="url"
+                            placeholder="Enter URL containing list of albums"
+                        />
+                    </label>
+
+                    <label for="paginate">
+                        <div>Auto Paginate</div>
+                        <input
+                            type="radio"
+                            class="oa-radio-green oa-disabled"
+                            name="paginate"
+                            id="paginate"
+                            value="yes"
+                        />
+                        YES
+
+                        <input
+                            type="radio"
+                            class="oa-radio-green oa-disabled"
+                            name="paginate"
+                            id="paginate"
+                            value="no"
+                        />
+                        NO
+                    </label>
+
+                    <!-- submit button -->
+                    <input
+                        title="Submits the form and start the Bot"
+                        type="submit"
+                        value="Start"
+                        class="oa-btn-green-grad oa-main-btn oa-submit oa-disabled"
+                    />
+                </form>
+                <!-- start form -->
+            </div>
+            <!-- head container -->
+        </section>
+        <!-- head section -->
+
+        <!-- mid section -->
+        <section>
+            <!-- mid container -->
+            <div class="d-border flex p-2" style="height: 21.9rem">
+                <!-- mid left -->
+                <div class="oa-file-container flex-grow mr-3">
+                    <!-- mid left section title -->
+                    <div class="oa-title-bar">Albums</div>
+
+                    <!-- mid left section content -->
+                    <div class="oa-divide" id="output-files-div">
+                        <!-- file row  -->
+                        <!-- <div class="oa-file-row">
+                            <svg class="bi oa-icon" fill="currentColor">
+                                <use xlink:href="../assets/oa.svg#folder"></use>
+                            </svg>
+                            <span class="flex-grow">File name of the file</span>
+                            <button
+                                class="oa-main-btn oa-btn-xs oa-btn-blue-grad"
+                                title="Opens this file with default system app"
+                            >
+                                Open
+                            </button>
+                        </div> -->
+                    </div>
+                    <!-- mid left section content -->
+                </div>
+                <!-- mid left -->
+
+                <!-- mid left -->
+                <div class="flex flex-col">
+                    <button
+                        id="set_root_folder"
+                        class="oa-btn-blue-grad mb-2 oa-disabled oa-main-btn"
+                        title="Let's you select a folder for data and files"
+                    >
+                        Set Root Folder
+                    </button>
+
+                    <button
+                        id="read_data_files"
+                        class="oa-btn-blue-grad mb-2 oa-disabled oa-main-btn"
+                        title="Let's you select a folder for data and files"
+                    >
+                        Open Root Folder
+                    </button>
+                    <div
+                        style="max-width: 11rem"
+                        class="text-box-message"
+                    >
+                        Enter absolute URL and hit start to download all songs
+                        of all the albums avaiable on that page. You can opt for
+                        pagination as well. Downloads form
+                        <a
+                            href="https://downloadming4.com"
+                            id="target_domain"
+                            target="_blank"
+                            class="oa-link"
+                            >downloadming4.com</a
+                        >
+                    </div>
+                </div>
+                <!-- mid left -->
+            </div>
+            <!-- mid container -->
+        </section>
+        <!-- mid section -->
+    </body>
+</html>
