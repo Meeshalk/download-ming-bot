@@ -1,4 +1,5 @@
 import { hideSpinner, isValidUrl, showSpinner, sleep } from "./core/common";
+import { fileExists, joinPath, listFiles, makeFolder } from "./core/fileSystem";
 import "./styles/main.css";
 const { ipcRenderer, shell } = require("electron");
 const Store = require("electron-store");
@@ -13,6 +14,8 @@ const mainForm = document.querySelector("#mainform");
 const setRootFolder = document.querySelector("#set_root_folder");
 const targetDomain = document.querySelector("#target_domain");
 
+let albumFolder = null;
+let rootFolder = null;
 // open target website
 targetDomain.addEventListener("click", async (targetDomainClicked) => {
     targetDomainClicked.preventDefault();
@@ -22,6 +25,22 @@ targetDomain.addEventListener("click", async (targetDomainClicked) => {
 // open
 document.addEventListener("DOMContentLoaded", async (domLoaded) => {
     // onload
+    if (config.has("root-folder")) {
+        rootFolder = config.get("root-folder");
+        if (!(await fileExists(rootFolder, "albums"))) {
+            try {
+                albumFolder = await makeFolder(rootFolder, "albums");
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            albumFolder = joinPath(rootFolder, "albums");
+        }
+
+        config.set('out', albumFolder);
+        await listFiles(albumFolder);
+    }
+
     console.log("onLoad");
 });
 
@@ -36,15 +55,18 @@ setRootFolder.addEventListener("click", async (rootFolderEvent) => {
     if (response.canceled === false) {
         config.clear();
         config.set("root-folder", response.filePaths[0]);
+        rootFolder = config.get("root-folder");
     }
 });
 
 mainForm.addEventListener("submit", async (mainFormSubmitEvent) => {
     mainFormSubmitEvent.preventDefault();
     showSpinner();
-    let rootFolder = config.get("root-folder");
+    let root = config.get("root-folder");
     let url = mainForm.elements.url.value;
+    let paginate = mainForm.elements.paginate.value;
     let urlValidated = await isValidUrl(url);
+
     if (urlValidated === false) {
         // error - in input url
         console.log("Invalid url");
@@ -54,7 +76,7 @@ mainForm.addEventListener("submit", async (mainFormSubmitEvent) => {
 
     if (
         !(urlValidated instanceof URL) ||
-        !(VALID_DOMAINS.includes(urlValidated.hostname))
+        !VALID_DOMAINS.includes(urlValidated.hostname)
     ) {
         // error - domain unsupported
         hideSpinner();
@@ -62,7 +84,7 @@ mainForm.addEventListener("submit", async (mainFormSubmitEvent) => {
         return false;
     }
 
-    
+
 
     // console.log(rootFolder, url);
     hideSpinner();
