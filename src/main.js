@@ -8,6 +8,8 @@ if (require("electron-squirrel-startup")) {
 }
 
 const { openDialog, showMessageBox } = require("./app/core/common");
+const { request } = require("./app/core/request");
+
 let mainWin;
 // Menu.setApplicationMenu(null);
 const createWindow = () => {
@@ -48,7 +50,6 @@ app.on("ready", createWindow);
 
 // main function
 
-// read 
 
 // open dialog
 ipcMain.handle("open-dialog", async (event, data) => {
@@ -58,6 +59,11 @@ ipcMain.handle("open-dialog", async (event, data) => {
 // open message box
 ipcMain.handle("show-message", async (event, data) => {
     return await showMessageBox(data, mainWin);
+});
+
+// http request and response
+ipcMain.handle("http-request", async (event, data) => {
+    return await request(data);
 });
 
 
