@@ -20,6 +20,14 @@ async function showMessageBox(options, win = null) {
     return await dialog.showMessageBox(win, options);
 }
 
+async function isValidUrl(str){
+    try {
+        return new URL(str);
+    } catch (urlPaseError) {
+        return false;
+    }
+}
+
 function lowerTrim(str) {
     return str.replace(/\s+/g, " ").trim().toLowerCase();
 }
@@ -50,6 +58,7 @@ export {
     sleep,
     openDialog,
     showMessageBox,
+    isValidUrl,
     lowerTrim,
     getKeyByValue,
     toTitleCase,

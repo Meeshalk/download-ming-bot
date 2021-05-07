@@ -14,13 +14,6 @@
                 style="border-right-color: white; border-top-color: white"
                 viewBox="0 0 24 24"
             ></svg>
-            <!-- <button
-                id="cancel_process"
-                class="mt-4 oa-btn-red oa-main-btn"
-                title="Let's you select a folder for data and files"
-            >
-                Cancel
-            </button> -->
         </div>
         <!-- head section -->
         <section class="top-panel mb-2">
@@ -36,6 +29,7 @@
                             name="url"
                             id="url"
                             placeholder="Enter URL containing list of albums"
+                            value="http://valid.url"
                         />
                     </label>
 
@@ -56,6 +50,7 @@
                             name="paginate"
                             id="paginate"
                             value="no"
+                            checked
                         />
                         NO
                     </label>
@@ -81,7 +76,7 @@
                 <!-- mid left -->
                 <div class="oa-file-container flex-grow mr-3">
                     <!-- mid left section title -->
-                    <div class="oa-title-bar">Albums</div>
+                    <div class="oa-title-bar">Downloaded Albums</div>
 
                     <!-- mid left section content -->
                     <div class="oa-divide" id="output-files-div">
@@ -120,10 +115,7 @@
                     >
                         Open Root Folder
                     </button>
-                    <div
-                        style="max-width: 11rem"
-                        class="text-box-message"
-                    >
+                    <div style="max-width: 11rem" class="text-box-message">
                         Enter absolute URL and hit start to download all songs
                         of all the albums avaiable on that page. You can opt for
                         pagination as well. Downloads form
@@ -131,8 +123,9 @@
                             href="https://downloadming4.com"
                             id="target_domain"
                             target="_blank"
+                            title="https://downloadming4.com"
                             class="oa-link"
-                            >downloadming4.com</a
+                            >downloadming4</a
                         >
                     </div>
                 </div>

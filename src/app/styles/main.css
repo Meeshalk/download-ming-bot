@@ -78,16 +78,20 @@
         --tw-ring-offset-width: 0px;
         --tw-ring-offset-color: #fff;
         --tw-ring-color: #2563eb;
-        --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-        --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+        --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 
+        var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+        --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 
+        calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+        box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), 
+        var(--tw-shadow, 0 0 #0000);
         border-color: #2563eb;
-        @apply focus:border-indigo-300 focus:ring-indigo-200 focus:ring-opacity-50
-        focus:bg-gray-50;
+        @apply focus:border-indigo-300 focus:ring-indigo-200 
+        focus:ring-opacity-50 focus:bg-gray-50;
     }
 
     .oa-submit {
-        @apply ml-2 mt-1 px-6 py-1 text-lg tracking-widest font-semibold uppercase;
+        @apply ml-2 mt-1 px-6 py-1 text-lg tracking-widest 
+        font-semibold uppercase;
     }
 
     .input-btn {
@@ -115,14 +119,22 @@
 
     .oa-btn-green-grad {
         @apply bg-gradient-to-t from-green-600 via-green-500 to-green-400;
-        @apply hover:bg-gradient-to-t hover:from-green-500 hover:via-green-600 hover:to-green-700 ;
-        @apply focus:bg-gradient-to-t focus:from-green-500 focus:via-green-600 focus:to-green-700 
+
+        @apply hover:bg-gradient-to-t hover:from-green-500 
+        hover:via-green-600 hover:to-green-700;
+
+        @apply focus:bg-gradient-to-t focus:from-green-500 
+        focus:via-green-600 focus:to-green-700; 
     }
 
     .oa-btn-blue-grad {
         @apply bg-gradient-to-t from-blue-600 via-blue-500 to-blue-400;
-        @apply hover:bg-gradient-to-t hover:from-blue-500 hover:via-blue-600 hover:to-blue-700 ;
-        @apply focus:bg-gradient-to-t focus:from-blue-500 focus:via-blue-600 focus:to-blue-700 
+        
+        @apply hover:bg-gradient-to-t hover:from-blue-500 
+        hover:via-blue-600 hover:to-blue-700;
+        
+        @apply focus:bg-gradient-to-t focus:from-blue-500 
+        focus:via-blue-600 focus:to-blue-700;
     }
 
     .oa-btn-red {
@@ -138,11 +150,13 @@
     }
 
     .oa-link{
-        @apply text-blue-800 hover:text-blue-700 focus:text-blue-900 font-bold;
+        @apply text-blue-800 hover:text-blue-700 focus:text-blue-900
+        font-bold;
     }
 
     .text-box-message { 
-        @apply border border-dotted border-gray-400 h-full px-2 py-1 text-justify font-semibold;
+        @apply border border-dotted border-gray-400 h-full p-2 text-justify
+        font-semibold;
     }
 
     .oa-disabled {
