@@ -2,7 +2,7 @@
  * Author: Meeshal k
  * Github: https://github.com/meeshalk
  * Part of a electron based desktop/native application
- * 
+ *
  */
 import { dialog } from "electron";
 
@@ -20,12 +20,43 @@ async function showMessageBox(options, win = null) {
     return await dialog.showMessageBox(win, options);
 }
 
-async function isValidUrl(str){
+async function isValidUrl(str) {
     try {
         return new URL(str);
     } catch (urlPaseError) {
         return false;
     }
+}
+
+// async function getAlbumLinksFromPage(pageData) {
+//     if (pageData instanceof Array) {
+//         console.log("yes");
+//         for (const page in pageData) {
+//             if (
+//                 pageData[page]["@type"] == "CollectionPage" &&
+//                 pageData[page].hasOwnProperty("hasPart") &&
+//                 pageData[page]['hasPart'] instanceof Array &&
+//                 pageData[page]['hasPart'].length > 0
+//             ) {
+//                 console.log(page);
+//                 console.log(pageData[page]);
+//                 console.log(pageData[page]['hasPart']);
+//             }
+//         }
+//     } else {
+//         console.log("false");
+//     }
+
+//     console.log("end");
+// }
+
+async function getPagedUrl(url, page){
+    url = new URL(url);
+    if(page < 2)
+        return url.href;
+    
+    url.pathname = `${url.pathname}/page/${page}`;
+    return url.href;
 }
 
 function lowerTrim(str) {
@@ -58,6 +89,7 @@ export {
     sleep,
     openDialog,
     showMessageBox,
+    getPagedUrl,
     isValidUrl,
     lowerTrim,
     getKeyByValue,

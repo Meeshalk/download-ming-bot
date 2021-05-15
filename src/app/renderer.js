@@ -1,13 +1,22 @@
-import { hideSpinner, isValidUrl, showSpinner, sleep } from "./core/common";
-import { fileExists, joinPath, listFiles, makeFolder } from "./core/fileSystem";
 import "./styles/main.css";
+import { getPage } from "./core/api";
+import {
+    showSpinner,
+    hideSpinner,
+    isValidUrl,
+    lowerTrim,
+    getPagedUrl,
+} from "./core/common";
+import { fileExists, joinPath, listFiles, makeFolder } from "./core/fileSystem";
+import { getAlbumDetailsFromDOM, getPagesArray } from "./core/scraper";
 const { ipcRenderer, shell } = require("electron");
+
 const Store = require("electron-store");
 
 // store init
 const config = new Store();
 
-const VALID_DOMAINS = ["donloadming.com", "donloadming4.com"];
+const VALID_DOMAINS = ["downloadming.com", "downloadming4.com"];
 
 // UI actions selectors and init
 const mainForm = document.querySelector("#mainform");
@@ -37,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async (domLoaded) => {
             albumFolder = joinPath(rootFolder, "albums");
         }
 
-        config.set('out', albumFolder);
+        config.set("out", albumFolder);
         await listFiles(albumFolder);
     }
 
@@ -63,7 +72,8 @@ mainForm.addEventListener("submit", async (mainFormSubmitEvent) => {
     mainFormSubmitEvent.preventDefault();
     showSpinner();
     let root = config.get("root-folder");
-    let url = mainForm.elements.url.value;
+    let out = config.get("out");
+    let url = lowerTrim(mainForm.elements.url.value);
     let paginate = mainForm.elements.paginate.value;
     let urlValidated = await isValidUrl(url);
 
@@ -84,7 +94,54 @@ mainForm.addEventListener("submit", async (mainFormSubmitEvent) => {
         return false;
     }
 
+    const initialPageDetails = await ipcRenderer.invoke(
+        "http-request",
+        await getPage(url)
+    );
 
+    let initialLinks = await getAlbumDetailsFromDOM(initialPageDetails.body);
+
+    // pagination logic
+    let pages = [];
+    let currentPage = null;
+    const pageMatrix = await getPagesArray(initialPageDetails.body);
+
+    if (pageMatrix === false || paginate === "no") {
+        pages = [1];
+        currentPage = 1;
+    } else {
+        pages = pageMatrix.pages;
+        currentPage = pageMatrix.current;
+    }
+
+    let albumArry = [];
+    while (pages.length !== 0) {
+        let thisPage = pages.shift();
+        let _url = null;
+        let pageDetails = null;
+        if (currentPage !== thisPage) {
+            // do the http and shit
+            _url = await getPagedUrl(url, thisPage);
+            pageDetails = await ipcRenderer.invoke(
+                "http-request",
+                await getPage(_url)
+            );
+            albumArry.push(await getAlbumDetailsFromDOM(pageDetails.body));
+            continue;
+        }
+        albumArry.push(initialLinks);
+    }
+
+    console.log(albumArry);
+
+    // let albums =
+    // console.log(pages);
+
+    // let count = pages.length;
+    // do {
+    //     count--;
+    //     console.log(pages.shift());
+    // } while (count > 0);
 
     // console.log(rootFolder, url);
     hideSpinner();

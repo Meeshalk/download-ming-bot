@@ -77,7 +77,7 @@ function request(options) {
             // check if request finished
             response.on("end", () => {
                 // No more data in response, read chunk
-                responseData["body"] = JSON.parse(chunktemp);
+                responseData["body"] = chunktemp;
 
                 // send response back via callback
                 resolve(responseData);

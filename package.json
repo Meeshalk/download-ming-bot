@@ -1,7 +1,7 @@
 {
     "name": "donload_ming_bot",
     "productName": "Download Ming Bot",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "description": "Desktop application with electron for downloading songs from downloadMing",
     "main": ".webpack/main",
     "scripts": {
@@ -99,8 +99,8 @@
         "tailwindcss": "^2.0.3"
     },
     "dependencies": {
+        "cheerio": "^1.0.0-rc.9",
         "electron-squirrel-startup": "^1.0.0",
-        "electron-store": "6.0.1",
-        "lodash": "^4.17.21"
+        "electron-store": "6.0.1"
     }
 }
