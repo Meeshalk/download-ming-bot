@@ -1,7 +1,12 @@
-const { readdir, lstat, access, mkdir } = require("fs").promises;
+const { readdir, lstat, access, mkdir, writeFile } = require("fs").promises;
 import { shell } from "electron";
 const path = require("path");
 const OUT_DIV = '#output-div';
+
+async function saveFileTo(folder, name, content, options = {}){
+    return await writeFile(path.join(folder, name), content);
+}
+
 async function listFiles(folder) {
     await removeAllChildNodes(OUT_DIV);
     let files = await readdir(folder);
@@ -61,7 +66,7 @@ async function removeAllChildNodes(selector) {
     return true;
 }
 
-function joinPath(root, name) {
+async function joinPath(root, name) {
     return path.join(root, name);
 }
 
@@ -82,9 +87,9 @@ async function fileExists(root, name) {
             ? true
             : false;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return false;
     }
 }
 
-export { listFiles, fileExists, makeFolder, joinPath };
+export { listFiles, fileExists, makeFolder, joinPath, saveFileTo };

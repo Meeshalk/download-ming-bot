@@ -100,6 +100,7 @@
     },
     "dependencies": {
         "cheerio": "^1.0.0-rc.9",
+        "electron-dl": "^3.2.1",
         "electron-squirrel-startup": "^1.0.0",
         "electron-store": "6.0.1"
     }

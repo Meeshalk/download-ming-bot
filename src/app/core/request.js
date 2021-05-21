@@ -7,6 +7,8 @@
  */
 
 import { net } from "electron";
+import { download } from "electron-dl";
+import { fileExists, joinPath, makeFolder } from "./fileSystem";
 
 function request(options) {
     return new Promise((resolve, reject) => {
@@ -86,4 +88,29 @@ function request(options) {
     });
 }
 
-export { request };
+async function donwnloadFile(window, options){
+    // console.log(options);
+    const {url, folder, subFolder, file } = options;
+    let storeAt = folder;
+    if (subFolder != null) {
+        if(!await fileExists(folder, subFolder))
+            storeAt = await makeFolder(folder, subFolder);
+        else
+            storeAt = await joinPath(folder, subFolder);
+    }
+
+    if(await fileExists(storeAt, file)){
+        return true;
+    }
+
+    try {
+        await download(window, url, {
+            directory: storeAt,
+            filename: file
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { request, donwnloadFile };
