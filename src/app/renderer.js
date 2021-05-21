@@ -6,9 +6,20 @@ import {
     isValidUrl,
     lowerTrim,
     getPagedUrl,
+    sleep,
 } from "./core/common";
-import { fileExists, joinPath, listFiles, makeFolder } from "./core/fileSystem";
-import { getAlbumDetailsFromDOM, getPagesArray } from "./core/scraper";
+import {
+    fileExists,
+    joinPath,
+    listFiles,
+    makeFolder,
+    saveFileTo,
+} from "./core/fileSystem";
+import {
+    getAlbumDetailsFromDOM,
+    getPagesArray,
+    getSongLinks,
+} from "./core/scraper";
 const { ipcRenderer, shell } = require("electron");
 
 const Store = require("electron-store");
@@ -43,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async (domLoaded) => {
                 console.log(error);
             }
         } else {
-            albumFolder = joinPath(rootFolder, "albums");
+            albumFolder = await joinPath(rootFolder, "albums");
         }
 
         config.set("out", albumFolder);
@@ -115,6 +126,7 @@ mainForm.addEventListener("submit", async (mainFormSubmitEvent) => {
     }
 
     let albumArry = [];
+    let songCount = 0;
     while (pages.length !== 0) {
         let thisPage = pages.shift();
         let _url = null;
@@ -132,17 +144,40 @@ mainForm.addEventListener("submit", async (mainFormSubmitEvent) => {
         albumArry.push(initialLinks);
     }
 
-    console.log(albumArry);
+    for (const pageKey in albumArry) {
+        const page = albumArry[pageKey];
 
-    // let albums =
-    // console.log(pages);
+        for (const albumKey in page) {
+            const album = page[albumKey];
+            const songDetails = await ipcRenderer.invoke(
+                "http-request",
+                await getPage(album.url)
+            );
 
-    // let count = pages.length;
-    // do {
-    //     count--;
-    //     console.log(pages.shift());
-    // } while (count > 0);
+            albumArry[pageKey][albumKey]["songs"] = await getSongLinks(
+                songDetails.body
+            );
 
-    // console.log(rootFolder, url);
+            songCount += (albumArry[pageKey][albumKey]["songs"]).length;
+
+            for (const songKey in albumArry[pageKey][albumKey]["songs"]) {
+
+                let song = albumArry[pageKey][albumKey]["songs"][songKey];
+                if (song.name === false || song.url === false) continue;
+
+                const songResponse = await ipcRenderer.invoke("download", {
+                    url: song.url,
+                    folder: albumFolder,
+                    subFolder: album.title,
+                    file: song.filename,
+                });
+            }
+        }
+    }
     hideSpinner();
+    await ipcRenderer.invoke('show-message', {
+        message:`${songCount} songs downloaded!`,
+        type: "info",
+        title: "Download Complete",
+    });
 });

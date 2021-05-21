@@ -67,7 +67,7 @@
         font-size: 1rem;
         line-height: 1.5rem;
         @apply border-gray-300 focus:border-indigo-300 capitalize
-        focus:ring-indigo-200 focus:ring-opacity-50 mt-1 text-xl font-semibold
+        focus:ring-indigo-200 focus:ring-opacity-50 mt-1 font-semibold
         rounded-md shadow-sm w-full bg-gray-100 focus:bg-gray-50;
     }
 
