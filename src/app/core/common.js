@@ -28,33 +28,10 @@ async function isValidUrl(str) {
     }
 }
 
-// async function getAlbumLinksFromPage(pageData) {
-//     if (pageData instanceof Array) {
-//         console.log("yes");
-//         for (const page in pageData) {
-//             if (
-//                 pageData[page]["@type"] == "CollectionPage" &&
-//                 pageData[page].hasOwnProperty("hasPart") &&
-//                 pageData[page]['hasPart'] instanceof Array &&
-//                 pageData[page]['hasPart'].length > 0
-//             ) {
-//                 console.log(page);
-//                 console.log(pageData[page]);
-//                 console.log(pageData[page]['hasPart']);
-//             }
-//         }
-//     } else {
-//         console.log("false");
-//     }
-
-//     console.log("end");
-// }
-
-async function getPagedUrl(url, page){
+async function getPagedUrl(url, page) {
     url = new URL(url);
-    if(page < 2)
-        return url.href;
-    
+    if (page < 2) return url.href;
+
     url.pathname = `${url.pathname}/page/${page}`;
     return url.href;
 }

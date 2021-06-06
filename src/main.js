@@ -20,7 +20,7 @@ const createWindow = () => {
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
-            // devTools: false,
+            devTools: false,
         },
         show: false,
         minWidth: 640,
@@ -36,7 +36,7 @@ const createWindow = () => {
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools({ mode: 'detach' });
+    // mainWindow.webContents.openDevTools({ mode: 'detach' });
 
     mainWindow.setMenuBarVisibility(false);
 

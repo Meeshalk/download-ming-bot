@@ -49,9 +49,9 @@ async function getSongLinks(html) {
 async function getNameOfSong(unparsed) {
     if (unparsed === null) return false;
     const nameRegex = /(.+\/(?<name>.+\.mp3))/i;
-    const symbolRegex = /(?<rep>\/|\\|\:|\*|\?|\"|\<|\>|\|)/ig;
+    const symbolRegex = /(?<rep>\/|\\|\:|\*|\?|\"|\<|\>|\|)/gi;
     const matched = decodeURI(unparsed).match(nameRegex);
-    if (matched !== null && matched.groups !== undefined){
+    if (matched !== null && matched.groups !== undefined) {
         return matched.groups["name"].replaceAll(symbolRegex, "_");
     }
     return false;
@@ -68,7 +68,10 @@ async function getBitrate(unparsed) {
 
 async function getFileName(name, bitrate) {
     if (name.toLowerCase().indexOf("downloadming"))
-        return name.replace(/((www\.)?downloadming.*?\.[a-z0-9]{2,})/i, `${bitrate} kbps`);
+        return name.replace(
+            /((www\.)?downloadming.*?\.[a-z0-9]{2,})/i,
+            `${bitrate} kbps`
+        );
     else return name.replace(".mp3", `- ${bitrate} kbps.mp3`);
 }
 

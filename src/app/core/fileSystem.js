@@ -1,9 +1,9 @@
 const { readdir, lstat, access, mkdir, writeFile } = require("fs").promises;
 import { shell } from "electron";
 const path = require("path");
-const OUT_DIV = '#output-div';
+const OUT_DIV = "#output-div";
 
-async function saveFileTo(folder, name, content, options = {}){
+async function saveFileTo(folder, name, content, options = {}) {
     return await writeFile(path.join(folder, name), content);
 }
 

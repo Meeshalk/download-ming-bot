@@ -1,7 +1,7 @@
 {
     "name": "donload_ming_bot",
     "productName": "Download Ming Bot",
-    "version": "0.4.2",
+    "version": "0.4.3",
     "description": "Desktop application with electron for downloading songs from downloadMing",
     "main": ".webpack/main",
     "scripts": {

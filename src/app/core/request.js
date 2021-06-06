@@ -3,7 +3,7 @@
  * Github: https://github.com/meeshalk
  * Part of a electron based desktop/native application
  *
- * Handles HTTP requests 
+ * Handles HTTP requests
  */
 
 import { net } from "electron";
@@ -41,37 +41,36 @@ function request(options) {
             // local variable init
             let responseData = {};
             let chunktemp = "";
-            let resCodeAt0 = (response.statusCode).toString().charAt(0);
+            let resCodeAt0 = response.statusCode.toString().charAt(0);
 
             // handle net errors
-            if (resCodeAt0 != '2') {
-                responseData['error'] = true;
+            if (resCodeAt0 != "2") {
+                responseData["error"] = true;
 
                 switch (resCodeAt0) {
-                    case '3':
-                        responseData['errorType'] = '3xx Redirect Error!';
+                    case "3":
+                        responseData["errorType"] = "3xx Redirect Error!";
                         break;
 
-                    case '4':
-                        responseData['errorType'] = '4xx Client Error!';
+                    case "4":
+                        responseData["errorType"] = "4xx Client Error!";
                         break;
 
-                    case '5':
-                        responseData['errorType'] = '5xx Server Error!';
+                    case "5":
+                        responseData["errorType"] = "5xx Server Error!";
                         break;
                     default:
-                        responseData['errorType'] = 'Unknown Error!';
+                        responseData["errorType"] = "Unknown Error!";
                         break;
                 }
-
-            }else{
-                responseData['error'] = false;
+            } else {
+                responseData["error"] = false;
             }
 
             // collect response headers
             responseData["headers"] = response.headers;
 
-            // get response data/body 
+            // get response data/body
             response.on("data", (chunk) => {
                 chunktemp = chunktemp + chunk.toString();
             });
@@ -88,25 +87,24 @@ function request(options) {
     });
 }
 
-async function donwnloadFile(window, options){
+async function donwnloadFile(window, options) {
     // console.log(options);
-    const {url, folder, subFolder, file } = options;
+    const { url, folder, subFolder, file } = options;
     let storeAt = folder;
     if (subFolder != null) {
-        if(!await fileExists(folder, subFolder))
+        if (!(await fileExists(folder, subFolder)))
             storeAt = await makeFolder(folder, subFolder);
-        else
-            storeAt = await joinPath(folder, subFolder);
+        else storeAt = await joinPath(folder, subFolder);
     }
 
-    if(await fileExists(storeAt, file)){
+    if (await fileExists(storeAt, file)) {
         return true;
     }
 
     try {
         await download(window, url, {
             directory: storeAt,
-            filename: file
+            filename: file,
         });
     } catch (error) {
         console.log(error);
