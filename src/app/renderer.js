@@ -33,6 +33,7 @@ const VALID_DOMAINS = ["downloadming.com", "downloadming4.com"];
 const mainForm = document.querySelector("#mainform");
 const setRootFolder = document.querySelector("#set_root_folder");
 const targetDomain = document.querySelector("#target_domain");
+const openOutFolder = document.querySelector("#open-out-folder");
 
 let albumFolder = null;
 let rootFolder = null;
@@ -77,6 +78,19 @@ setRootFolder.addEventListener("click", async (rootFolderEvent) => {
         config.set("root-folder", response.filePaths[0]);
         rootFolder = config.get("root-folder");
     }
+});
+
+openOutFolder.addEventListener("click", async (openOutFolderEvent) => {
+    if(config.has("root-folder")){
+        await shell.openPath(config.get("root-folder"));
+        return true;
+    }
+
+    await ipcRenderer.invoke('show-message', {
+        message:`Root folder not set.`,
+        type: "warning",
+        title: "Root Unknown",
+    });
 });
 
 mainForm.addEventListener("submit", async (mainFormSubmitEvent) => {
