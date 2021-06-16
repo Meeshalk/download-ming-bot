@@ -31,7 +31,8 @@ async function putFileOnUI(filePath, name) {
             <svg class="bi oa-icon" fill="currentColor">
                 <use xlink:href="../assets/oa.svg#folder"></use>
             </svg>
-            <span class="flex-grow">${baseName}</span>
+            <span class="flex-grow pr-1 overflow-ellipsis overflow-hidden
+            whitespace-nowrap" style="max-width: 305px;">${baseName}</span>
             <button
                 data-path="${filePath}"
                 class="oa-main-btn oa-btn-xs oa-btn-blue-grad folder-open-button"
